@@ -48,4 +48,23 @@ public class Model {
    	 
    	 return this.dao.getAllProviders();
     }
+
+
+	public String doAnalisi() {
+		// TODO Auto-generated method stub
+		int max = 0;
+		String result = "";
+		for(Citta v : this.vertici) {
+			if(Graphs.neighborListOf(this.grafo, v).size() > max ) {
+				
+				max = Graphs.neighborListOf(this.grafo, v).size();
+				result = "\n"+v.getNome()+" # vicini: "+max;
+				
+			}else if(Graphs.neighborListOf(this.grafo, v).size() == max){
+				result = result + "\n"+v.getNome()+" # vicini: "+max;
+			}
+		}
+		
+		return result;
+	}
 }

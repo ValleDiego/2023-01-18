@@ -50,7 +50,8 @@ public class FXMLController {
 
 	@FXML
 	void doAnalisiGrafo(ActionEvent event) {
-   	 
+   	 	String msg = this.model.doAnalisi();
+   	 	txtResult.appendText(msg);
 	}
 
 	@FXML
