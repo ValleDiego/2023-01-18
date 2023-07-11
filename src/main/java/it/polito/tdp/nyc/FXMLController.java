@@ -16,66 +16,86 @@ import javafx.scene.control.TextField;
 
 public class FXMLController {
 
-	private Model model;
-	
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="btnAnalisi"
-    private Button btnAnalisi; // Value injected by FXMLLoader
-
-    @FXML // fx:id="btnCreaGrafo"
-    private Button btnCreaGrafo; // Value injected by FXMLLoader
-
-    @FXML // fx:id="btnPercorso"
-    private Button btnPercorso; // Value injected by FXMLLoader
-
-    @FXML // fx:id="cmbProvider"
-    private ComboBox<?> cmbProvider; // Value injected by FXMLLoader
-
-    @FXML // fx:id="txtDistanza"
-    private TextField txtDistanza; // Value injected by FXMLLoader
-
-    @FXML // fx:id="txtResult"
-    private TextArea txtResult; // Value injected by FXMLLoader
-
-    @FXML // fx:id="txtStringa"
-    private TextField txtStringa; // Value injected by FXMLLoader
+    private Model model;
     
-    @FXML // fx:id="txtTarget"
-    private ComboBox<?> txtTarget; // Value injected by FXMLLoader
+	@FXML // ResourceBundle that was given to the FXMLLoader
+	private ResourceBundle resources;
 
-    @FXML
-    void doAnalisiGrafo(ActionEvent event) {
-    	
-    }
+	@FXML // URL location of the FXML file that was given to the FXMLLoader
+	private URL location;
 
-    @FXML
-    void doCalcolaPercorso(ActionEvent event) {
-    	
-    }
+	@FXML // fx:id="btnAnalisi"
+	private Button btnAnalisi; // Value injected by FXMLLoader
 
-    @FXML
-    void doCreaGrafo(ActionEvent event) {
-    	
-    }
+	@FXML // fx:id="btnCreaGrafo"
+	private Button btnCreaGrafo; // Value injected by FXMLLoader
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert btnAnalisi != null : "fx:id=\"btnAnalisi\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnCreaGrafo != null : "fx:id=\"btnCreaGrafo\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnPercorso != null : "fx:id=\"btnPercorso\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert cmbProvider != null : "fx:id=\"cmbProvider\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtDistanza != null : "fx:id=\"txtDistanza\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtStringa != null : "fx:id=\"txtStringa\" was not injected: check your FXML file 'Scene.fxml'.";
+	@FXML // fx:id="btnPercorso"
+	private Button btnPercorso; // Value injected by FXMLLoader
 
-    }
+	@FXML // fx:id="cmbProvider"
+	private ComboBox<String> cmbProvider; // Value injected by FXMLLoader
 
-    public void setModel(Model model) {
-    	this.model = model;
-    }
+	@FXML // fx:id="txtDistanza"
+	private TextField txtDistanza; // Value injected by FXMLLoader
+
+	@FXML // fx:id="txtResult"
+	private TextArea txtResult; // Value injected by FXMLLoader
+
+	@FXML // fx:id="txtStringa"
+	private TextField txtStringa; // Value injected by FXMLLoader
+    
+	@FXML // fx:id="txtTarget"
+	private ComboBox<?> txtTarget; // Value injected by FXMLLoader
+
+	@FXML
+	void doAnalisiGrafo(ActionEvent event) {
+   	 
+	}
+
+	@FXML
+	void doCalcolaPercorso(ActionEvent event) {
+   	 
+	}
+
+	@FXML
+	void doCreaGrafo(ActionEvent event) {
+   	 
+   	 txtResult.clear();
+   	 String p = cmbProvider.getValue();
+   	 
+   	 if(p == null) {
+   		 txtResult.appendText("Errore, scegli un provider");
+   		 return;
+   	 }
+   	 
+   	 double x;
+   	 try {
+   		  x = Double.parseDouble(txtDistanza.getText());
+   	 }catch(NumberFormatException ex) {
+   		 txtResult.appendText("\nErrore, inserire una distanza minima valida, ovvero un numero");
+   		 return;
+   	 }
+   	 
+   	 String msg = this.model.creaGrafo(p, x);
+   	 txtResult.appendText(msg);
+   	 
+	}
+
+	@FXML // This method is called by the FXMLLoader when initialization is complete
+	void initialize() {
+    	assert btnAnalisi != null : "fx:id=\"btnAnalisi\" was not injected: check your FXML file 'Scene.fxml'.";
+    	assert btnCreaGrafo != null : "fx:id=\"btnCreaGrafo\" was not injected: check your FXML file 'Scene.fxml'.";
+    	assert btnPercorso != null : "fx:id=\"btnPercorso\" was not injected: check your FXML file 'Scene.fxml'.";
+    	assert cmbProvider != null : "fx:id=\"cmbProvider\" was not injected: check your FXML file 'Scene.fxml'.";
+    	assert txtDistanza != null : "fx:id=\"txtDistanza\" was not injected: check your FXML file 'Scene.fxml'.";
+    	assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+    	assert txtStringa != null : "fx:id=\"txtStringa\" was not injected: check your FXML file 'Scene.fxml'.";
+
+	}
+
+	public void setModel(Model model) {
+   	 this.model = model;
+   	 cmbProvider.getItems().addAll(this.model.getProviders());
+	}
 }
