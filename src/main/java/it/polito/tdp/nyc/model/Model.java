@@ -16,6 +16,7 @@ import it.polito.tdp.nyc.db.NYCDao;
 public class Model {
     
     private List<Citta> vertici;
+    private String uffa;
     private NYCDao dao = new NYCDao();
     private Graph<Citta, DefaultWeightedEdge> grafo;
     
